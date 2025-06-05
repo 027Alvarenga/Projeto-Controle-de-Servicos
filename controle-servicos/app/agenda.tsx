@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, FlatList, Alert, TouchableOpacity } from 'react
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
+import { Feather } from '@expo/vector-icons';
 
 // Tipo do cliente
 type Cliente = {
@@ -71,6 +72,7 @@ export default function Agenda() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }: { item: Cliente }) => (
           <View style={styles.clienteCard}>
+            
             <View style={styles.clienteInfo}>
               <Text style={styles.nome}>{item.nome}</Text>
               <Text style={styles.info}>Telefone: {item.telefone}</Text>
@@ -82,7 +84,7 @@ export default function Agenda() {
               style={styles.deleteButton}
               onPress={() => removerCliente(item.id)}
             >
-              <Text style={styles.deleteButtonText}>Remover</Text>
+              <Feather name="trash-2" size={15} color="#fff" />
             </TouchableOpacity>
           </View>
         )}
