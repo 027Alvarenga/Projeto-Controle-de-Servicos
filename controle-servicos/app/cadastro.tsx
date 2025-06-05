@@ -36,6 +36,7 @@ export default function Cadastro() {
       setTelefone('');
       setServico('');
       setEndereco('');
+      setData('');
 
       // Navegar para a agenda
       router.push('/agenda');
