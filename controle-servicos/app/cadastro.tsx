@@ -12,12 +12,12 @@ export default function Cadastro() {
   const router = useRouter();
 
   const salvarCliente = async () => {
-    if (!nome || !telefone || !servico) {
+    if (!nome || !telefone || !servico || !endereco) {
       Alert.alert('Erro', 'Preencha todos os campos');
       return;
     }
 
-    const novoCliente = { nome, telefone, servico };
+    const novoCliente = { nome, telefone, servico, endereco };
 
     try {
       // Buscar clientes salvos
