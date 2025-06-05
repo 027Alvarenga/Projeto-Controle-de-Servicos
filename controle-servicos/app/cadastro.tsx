@@ -1,0 +1,106 @@
+import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
+import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
+
+export default function Cadastro() {
+  const [nome, setNome] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [servico, setServico] = useState('');
+  const [endereco, setEndereco] = useState('');
+
+  const router = useRouter();
+
+  const salvarCliente = async () => {
+    if (!nome || !telefone || !servico) {
+      Alert.alert('Erro', 'Preencha todos os campos');
+      return;
+    }
+
+    const novoCliente = { nome, telefone, servico };
+
+    try {
+      // Buscar clientes salvos
+      const clientesJSON = await AsyncStorage.getItem('@clientes');
+      const clientes = clientesJSON ? JSON.parse(clientesJSON) : [];
+
+      // Adicionar novo cliente
+      const novosClientes = [...clientes, novoCliente];
+
+      // Salvar no AsyncStorage
+      await AsyncStorage.setItem('@clientes', JSON.stringify(novosClientes));
+
+      // Limpar campos
+      setNome('');
+      setTelefone('');
+      setServico('');
+      setEndereco('');
+
+      // Navegar para a agenda
+      router.push('/agenda');
+
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível salvar o cliente');
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Cadastro de Cliente</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Nome do Cliente"
+        value={nome}
+        onChangeText={setNome}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Telefone"
+        keyboardType="phone-pad"
+        value={telefone}
+        onChangeText={setTelefone}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Serviço (ex: corte, unha, treino...)"
+        value={servico}
+        onChangeText={setServico}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Endereço"
+        value={endereco}
+        onChangeText={setEndereco}
+      />
+
+      <Button title="Salvar Cliente e Ir para Agenda" onPress={salvarCliente} />
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    paddingTop: 60,
+    backgroundColor: '#fff',
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 20,
+  },
+});
