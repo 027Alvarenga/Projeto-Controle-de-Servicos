@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 
@@ -8,16 +8,17 @@ export default function Cadastro() {
   const [telefone, setTelefone] = useState('');
   const [servico, setServico] = useState('');
   const [endereco, setEndereco] = useState('');
+  const [data, setData] = useState('');
 
   const router = useRouter();
 
   const salvarCliente = async () => {
-    if (!nome || !telefone || !servico || !endereco) {
+    if (!nome || !telefone || !servico || !endereco || !data) {
       Alert.alert('Erro', 'Preencha todos os campos');
       return;
     }
 
-    const novoCliente = { nome, telefone, servico, endereco };
+    const novoCliente = { nome, telefone, servico, endereco, data };
 
     try {
       // Buscar clientes salvos
@@ -76,6 +77,13 @@ export default function Cadastro() {
         placeholder="Endereço"
         value={endereco}
         onChangeText={setEndereco}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Data (DD/MM/AAAA)"
+        value={data}
+        onChangeText={setData}
       />
 
       <Button title="Salvar Cliente e Ir para Agenda" onPress={salvarCliente} />

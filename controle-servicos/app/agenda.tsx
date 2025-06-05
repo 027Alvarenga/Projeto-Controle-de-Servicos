@@ -10,6 +10,7 @@ type Cliente = {
   telefone: string;
   servico: string;
   endereco: string;
+  data: string;
 };
 
 export default function Agenda() {
@@ -75,6 +76,7 @@ export default function Agenda() {
               <Text style={styles.info}>Telefone: {item.telefone}</Text>
               <Text style={styles.info}>Serviço: {item.servico}</Text>
               <Text style={styles.info}>Endereço: {item.endereco}</Text>
+              <Text style={styles.info}>Data: {item.data}</Text>
             </View>
             <TouchableOpacity
               style={styles.deleteButton}
