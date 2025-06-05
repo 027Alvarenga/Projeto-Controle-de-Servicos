@@ -63,7 +63,18 @@ export default function Cadastro() {
         placeholder="Telefone"
         keyboardType="phone-pad"
         value={telefone}
-        onChangeText={setTelefone}
+        onChangeText={(text) => {
+        let numeros = text.replace(/\D/g, '');
+        if (numeros.length > 11) numeros = numeros.slice(0, 11);
+
+        if (numeros.length >= 7) {
+            setTelefone(`(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`);
+        } else if (numeros.length >= 3) {
+            setTelefone(`(${numeros.slice(0, 2)}) ${numeros.slice(2)}`);
+        } else {
+            setTelefone(numeros);
+        }
+        }}
       />
 
       <TextInput
@@ -82,9 +93,21 @@ export default function Cadastro() {
 
       <TextInput
         style={styles.input}
-        placeholder="Data (DD/MM/AAAA)"
+        placeholder="Data do agendamento"
+        keyboardType="numeric"
         value={data}
-        onChangeText={setData}
+        onChangeText={(text) => {
+        let numeros = text.replace(/\D/g, '');
+        if (numeros.length > 8) numeros = numeros.slice(0, 8);
+
+        if (numeros.length >= 5) {
+        setData(`${numeros.slice(0, 2)}/${numeros.slice(2, 4)}/${numeros.slice(4)}`);
+        } else if (numeros.length >= 3) {
+        setData(`${numeros.slice(0, 2)}/${numeros.slice(2)}`);
+        } else {
+        setData(numeros);
+    }
+  }}
       />
 
       <Button title="Salvar Cliente e Ir para Agenda" onPress={salvarCliente} />
