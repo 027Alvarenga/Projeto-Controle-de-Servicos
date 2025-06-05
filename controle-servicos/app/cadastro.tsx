@@ -54,6 +54,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Nome do Cliente"
+        placeholderTextColor="#666"
         value={nome}
         onChangeText={setNome}
       />
@@ -61,6 +62,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Telefone"
+        placeholderTextColor="#666"
         keyboardType="phone-pad"
         value={telefone}
         onChangeText={(text) => {
@@ -80,6 +82,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Serviço (ex: corte, unha, treino...)"
+        placeholderTextColor="#666"
         value={servico}
         onChangeText={setServico}
       />
@@ -87,6 +90,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Endereço"
+        placeholderTextColor="#666"
         value={endereco}
         onChangeText={setEndereco}
       />
@@ -94,6 +98,7 @@ export default function Cadastro() {
       <TextInput
         style={styles.input}
         placeholder="Data do agendamento"
+        placeholderTextColor="#666"
         keyboardType="numeric"
         value={data}
         onChangeText={(text) => {
