@@ -68,9 +68,12 @@ export default function Agenda() {
     <View style={styles.container}>
       <Text style={styles.title}>Agenda de Clientes</Text>
 
+      {clientes.length === 0 ? (
+      <Text style={styles.emptyMessage}>Não há clientes agendados</Text>
+    ) : (
       <FlatList
         data={clientes}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => String(item.id)}
         renderItem={({ item }: { item: Cliente }) => (
           <View style={styles.clienteCard}>
             
@@ -107,23 +110,8 @@ export default function Agenda() {
             </TouchableOpacity>
           </View>
         )}
-      />
-
-      <TouchableOpacity
-        style={[styles.deleteButton, { backgroundColor: 'gray', marginTop: 20 }]}
-        onPress={async () => {
-          try {
-            await AsyncStorage.removeItem('@clientes');
-            setClientes([]);
-            Alert.alert('Limpo', 'Todos os clientes foram removidos');
-          } catch (error) {
-            console.error('Erro ao limpar clientes:', error);
-            Alert.alert('Erro', 'Não foi possível apagar os clientes');
-          }
-        }}
-      >
-        <Text style={styles.deleteButtonText}>Apagar Todos</Text>
-      </TouchableOpacity>
+      />)
+      }
     </View>
   );
 }
@@ -181,4 +169,11 @@ editButton: {
   borderRadius: 5,
   marginRight: 10,
 },
+emptyMessage: {
+    fontSize: 16,
+    color: '#ff8c00', // Cor laranja
+    textAlign: 'center',
+    marginTop: 20,
+    fontWeight: '500',
+  },
 });
