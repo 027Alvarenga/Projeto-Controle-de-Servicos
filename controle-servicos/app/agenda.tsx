@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 // Tipo do cliente
 type Cliente = {
@@ -81,6 +82,24 @@ export default function Agenda() {
               <Text style={styles.info}>Data: {item.data}</Text>
             </View>
             <TouchableOpacity
+            style={styles.editButton}
+            onPress={() =>
+              router.push({
+                pathname: '/alterarAgendamento',
+                params: {
+                  id: item.id,
+                  nome: item.nome,
+                  telefone: item.telefone,
+                  servico: item.servico,
+                  endereco: item.endereco,
+                  data: item.data,
+                },
+              })
+            }
+>
+  <Feather name="edit-2" size={15} color="#fff" />
+</TouchableOpacity>
+            <TouchableOpacity
               style={styles.deleteButton}
               onPress={() => removerCliente(item.id)}
             >
@@ -153,4 +172,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  botoesAcoes: {
+  flexDirection: 'row',
+},
+editButton: {
+  backgroundColor: '#4CAF50',
+  padding: 8,
+  borderRadius: 5,
+  marginRight: 10,
+},
 });
